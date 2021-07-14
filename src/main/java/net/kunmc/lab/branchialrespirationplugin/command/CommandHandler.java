@@ -1,5 +1,8 @@
 package net.kunmc.lab.branchialrespirationplugin.command;
 
+import net.kunmc.lab.branchialrespirationplugin.AirManager;
+import net.kunmc.lab.branchialrespirationplugin.BranchialRespirationPlugin;
+
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -13,6 +16,13 @@ import java.util.stream.Stream;
 import java.util.stream.Collectors;
 
 public class CommandHandler implements CommandExecutor, TabCompleter {
+
+    private AirManager AirManager;
+
+    public CommandHandler()
+    {
+        this.AirManager = new AirManager();
+    }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) 
@@ -64,19 +74,23 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
                         .collect(Collectors.toList());
 
         }
-        
+
         return Collections.emptyList();
     }
     
     // 起動コマンド処理
     private void onEraKokyu(CommandSender sender)
     {
+        this.AirManager.startAirManager(BranchialRespirationPlugin.getInstance());
+
         sender.sendMessage("えら呼吸プラグインが有効になりました");
     }
 
     // 終了コマンド処理
     private void offEraKokyu(CommandSender sender)
     {
+        this.AirManager.stopAirManager();
+        
         sender.sendMessage("えら呼吸プラグインが無効になりました");
     }
     
