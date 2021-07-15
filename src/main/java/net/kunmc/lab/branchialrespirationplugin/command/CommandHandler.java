@@ -7,7 +7,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
-
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -17,11 +16,11 @@ import java.util.stream.Collectors;
 
 public class CommandHandler implements CommandExecutor, TabCompleter {
 
-    private AirManager AirManager;
+    private AirManager obj_AirManager;
 
-    public CommandHandler()
+    public CommandHandler(AirManager obj_AirManager)
     {
-        this.AirManager = new AirManager();
+        this.obj_AirManager = obj_AirManager;
     }
 
     @Override
@@ -81,7 +80,7 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
     // 起動コマンド処理
     private void onEraKokyu(CommandSender sender)
     {
-        this.AirManager.startAirManager(BranchialRespirationPlugin.getInstance());
+        this.obj_AirManager.startAirManager(BranchialRespirationPlugin.getInstance());
 
         sender.sendMessage("えら呼吸プラグインが有効になりました");
     }
@@ -89,7 +88,7 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
     // 終了コマンド処理
     private void offEraKokyu(CommandSender sender)
     {
-        this.AirManager.stopAirManager();
+        this.obj_AirManager.stopAirManager();
         
         sender.sendMessage("えら呼吸プラグインが無効になりました");
     }
