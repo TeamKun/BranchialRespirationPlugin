@@ -1,0 +1,98 @@
+package net.kunmc.lab.branchialrespirationplugin;
+
+import org.bukkit.scheduler.BukkitRunnable;
+
+import org.bukkit.Bukkit;
+import org.bukkit.entity.*;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+
+import java.util.ArrayList;
+import java.util.UUID;
+
+public class PlayerAirTask extends BukkitRunnable
+{
+    private PlayerManager obj_PlayerManager;
+
+    private final int PLAYER_MAX_AIR = 300;
+    private final double ADD_TICK_DAMAGE = 2.0;
+    private final int DEC_TICK_AIR = 100;
+    private final int ADD_TICK_AIR = 40;
+
+    public PlayerAirTask(PlayerManager obj_PlayerManager)
+    {
+        this.obj_PlayerManager = obj_PlayerManager;
+    }
+    
+    @Override
+    public void run() 
+    {
+        // ログイン中のプレイヤーリスト取得
+        ArrayList<UUID> uuid_list = this.obj_PlayerManager.getPlayerList();
+
+        for(UUID uuid : uuid_list)
+        {
+            Player player = Bukkit.getPlayer(uuid);
+            if(player != null)
+            {
+                PlayerAirManager(player);
+            }
+        }
+    }
+
+    // プレイヤーの酸素残量管理
+    private void PlayerAirManager(Player player)
+    {
+        boolean check = checkHeadInWater(player);
+        int now_air = player.getRemainingAir();
+        // BranchialRespirationPlugin.getInstance().getLogger().info("タスク　　　  = " + String.valueOf(now_air));
+
+        // プレイヤーの頭の位置が水中か判定
+        if(check == false)
+        {
+            // プレイヤーの頭が水中にない場合
+            int dec_air = (now_air - this.DEC_TICK_AIR) > 0 ? this.DEC_TICK_AIR : now_air;
+            player.setRemainingAir(now_air - dec_air);
+
+            if((now_air - dec_air) <= 0)
+            {
+                //プレイヤーの酸素値が0の場合ダメージを与える 
+                player.damage(this.ADD_TICK_DAMAGE);
+            }
+
+            // BranchialRespirationPlugin.getInstance().getLogger().info("地上 設定酸素 = " + String.valueOf(player.getRemainingAir()));
+        }
+        else
+        {
+            // プレイヤーの頭が水中にある場合
+            int dec_air = (this.PLAYER_MAX_AIR - now_air) > this.ADD_TICK_AIR ? this.ADD_TICK_AIR : (this.PLAYER_MAX_AIR - now_air);
+            player.setRemainingAir(now_air + dec_air);
+
+            // BranchialRespirationPlugin.getInstance().getLogger().info("水中 設定酸素 = " + String.valueOf(player.getRemainingAir()));
+        }
+    }
+
+    // プレイヤーの頭の位置が水中か判定
+    private boolean checkHeadInWater(Player player)
+    {
+        boolean result = false;
+        Location pl_loc = player.getLocation();
+
+        // プレイヤーが水泳中かチェック
+        LivingEntity le = (LivingEntity)player;
+        if(!le.isSwimming())
+        {
+            pl_loc.setY(pl_loc.getY() + 1.0);
+        }
+
+        // プレイヤーの頭の位置のブロック取得
+        Block pl_head_block = pl_loc.getBlock();
+        if(pl_head_block.getType() == Material.WATER)
+        {
+            result = true;
+        }
+
+        return result;
+    }
+}

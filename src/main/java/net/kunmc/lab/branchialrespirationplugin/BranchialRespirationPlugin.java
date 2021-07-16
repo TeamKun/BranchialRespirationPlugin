@@ -21,7 +21,7 @@ public class BranchialRespirationPlugin extends JavaPlugin
     {
         INSTANCE = this;
         this.obj_PlayerManager = new PlayerManager(this);
-        this.obj_AirManager = new AirManager(this.obj_PlayerManager);
+        this.obj_AirManager = new AirManager();
 
         CommandHandler commandHandler = new CommandHandler(obj_AirManager);
         getServer().getPluginCommand("erakokyu").setExecutor(commandHandler);

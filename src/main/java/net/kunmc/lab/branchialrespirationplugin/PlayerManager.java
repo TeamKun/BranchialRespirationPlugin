@@ -10,12 +10,20 @@ import java.util.UUID;
 
 public class PlayerManager implements Listener 
 {
+    private static PlayerManager INSTANCE;
     ArrayList<UUID> player_lists;
 
     public PlayerManager(Plugin plugin)
     {
-        plugin.getServer().getPluginManager().registerEvents(this, plugin);
+        INSTANCE = this;
         this.player_lists = new ArrayList<>();
+        
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
+    }
+
+    public static PlayerManager getInstance() 
+    {
+        return INSTANCE;
     }
 
     @EventHandler
