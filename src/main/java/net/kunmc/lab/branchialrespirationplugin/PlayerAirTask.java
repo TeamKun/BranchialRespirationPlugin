@@ -16,9 +16,9 @@ public class PlayerAirTask extends BukkitRunnable
     private PlayerManager obj_PlayerManager;
 
     private final int PLAYER_MAX_AIR = 300;
-    private final double ADD_TICK_DAMAGE = 2.0;
-    private final int DEC_TICK_AIR = 100;
-    private final int ADD_TICK_AIR = 40;
+    private final double ADD_TICK_DAMAGE = 0.5;
+    private final int DEC_TICK_AIR = 6;
+    private final int ADD_TICK_AIR = 2;
 
     public PlayerAirTask(PlayerManager obj_PlayerManager)
     {

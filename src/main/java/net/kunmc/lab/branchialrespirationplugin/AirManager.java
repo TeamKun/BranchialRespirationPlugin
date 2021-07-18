@@ -35,7 +35,7 @@ public class AirManager implements Listener {
     {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
         this.obj_PlayerAirTask = new PlayerAirTask(PlayerManager.getInstance());
-        this.obj_PlayerAirTask.runTaskTimer(plugin, 20, 20);
+        this.obj_PlayerAirTask.runTaskTimer(plugin, 1, 1);
     }
 
     // プラグインの無効化
