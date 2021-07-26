@@ -7,6 +7,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.checkerframework.common.returnsreceiver.qual.This;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 public class CommandHandler implements CommandExecutor, TabCompleter {
 
     private AirManager obj_AirManager;
+    private boolean enable_flg = false;
 
     public CommandHandler(AirManager obj_AirManager)
     {
@@ -80,17 +82,31 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
     // 起動コマンド処理
     private void onEraKokyu(CommandSender sender)
     {
-        this.obj_AirManager.startAirManager(BranchialRespirationPlugin.getInstance());
-
-        sender.sendMessage("えら呼吸プラグインが有効になりました");
+        if(this.enable_flg == false)
+        {
+            this.obj_AirManager.startAirManager(BranchialRespirationPlugin.getInstance());
+            this.enable_flg = true;
+            sender.sendMessage("えら呼吸プラグインが有効になりました");
+        }
+        else
+        {
+            sender.sendMessage("すでにプラグインが有効になっています");
+        }
     }
 
     // 終了コマンド処理
     private void offEraKokyu(CommandSender sender)
     {
-        this.obj_AirManager.stopAirManager();
-        
-        sender.sendMessage("えら呼吸プラグインが無効になりました");
+        if(this.enable_flg == true)
+        {
+            this.obj_AirManager.stopAirManager();
+            this.enable_flg = false;
+            sender.sendMessage("えら呼吸プラグインが無効になりました");
+        }
+        else
+        {
+            sender.sendMessage("すでにプラグインが無効になっています");
+        }
     }
     
     // コマンドヘルプ取得処理
