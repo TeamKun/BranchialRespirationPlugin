@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import net.kunmc.lab.branchialrespirationplugin.command.CommandHandler;
+import net.kunmc.lab.branchialrespirationplugin.command.ConfigManager;
 
 public class BranchialRespirationPlugin extends JavaPlugin
 {
@@ -23,7 +24,7 @@ public class BranchialRespirationPlugin extends JavaPlugin
         this.obj_PlayerManager = new PlayerManager(this);
         this.obj_AirManager = new AirManager();
 
-        CommandHandler commandHandler = new CommandHandler(obj_AirManager);
+        CommandHandler commandHandler = new CommandHandler(this.obj_AirManager);
         getServer().getPluginCommand("erakokyu").setExecutor(commandHandler);
         getServer().getPluginCommand("erakokyu").setTabCompleter(commandHandler);
 
