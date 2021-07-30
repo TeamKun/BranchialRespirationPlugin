@@ -7,6 +7,7 @@ import org.bukkit.event.entity.EntityAirChangeEvent;
 
 import org.bukkit.entity.*;
 
+import net.kunmc.lab.branchialrespirationplugin.command.ConfigManager;
 
 public class AirManager implements Listener {
     
@@ -34,7 +35,7 @@ public class AirManager implements Listener {
     public void startAirManager(Plugin plugin)
     {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
-        this.obj_PlayerAirTask = new PlayerAirTask(PlayerManager.getInstance());
+        this.obj_PlayerAirTask = new PlayerAirTask(PlayerManager.getInstance(), ConfigManager.getInstance());
         this.obj_PlayerAirTask.runTaskTimer(plugin, 1, 1);
     }
 

@@ -1,5 +1,7 @@
 package net.kunmc.lab.branchialrespirationplugin;
 
+import net.kunmc.lab.branchialrespirationplugin.command.ConfigManager;
+
 import org.bukkit.scheduler.BukkitRunnable;
 
 import org.bukkit.Bukkit;
@@ -14,15 +16,17 @@ import java.util.UUID;
 public class PlayerAirTask extends BukkitRunnable
 {
     private PlayerManager obj_PlayerManager;
+    private ConfigManager obj_ConfigManager;
 
     private final int PLAYER_MAX_AIR = 300;
     private final double ADD_TICK_DAMAGE = 1.0;
     private final int DEC_TICK_AIR = 6;
     private final int ADD_TICK_AIR = 2;
 
-    public PlayerAirTask(PlayerManager obj_PlayerManager)
+    public PlayerAirTask(PlayerManager obj_PlayerManager, ConfigManager obj_ConfigManager)
     {
         this.obj_PlayerManager = obj_PlayerManager;
+        this.obj_ConfigManager = obj_ConfigManager;
     }
     
     @Override

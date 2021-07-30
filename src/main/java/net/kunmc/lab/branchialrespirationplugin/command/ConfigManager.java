@@ -1,16 +1,21 @@
 package net.kunmc.lab.branchialrespirationplugin.command;
 
-import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.configuration.file.FileConfiguration;
 
-public class ConfigManager extends JavaPlugin 
+public class ConfigManager
 {
+    private static ConfigManager INSTANCE;
     private FileConfiguration config;
 
-    public ConfigManager()
+    public static ConfigManager getInstance() 
     {
-        saveDefaultConfig();
-        this.config = getConfig();
+        return INSTANCE;
+    }
+
+    public ConfigManager(FileConfiguration config)
+    {
+        INSTANCE = this;
+        this.config = config;
     }
 
     public void setDamage(double damage)
@@ -45,7 +50,7 @@ public class ConfigManager extends JavaPlugin
 
     public int getMaxAir()
     {
-        return this.config.getInt("maxAir");
+        return this.config.getInt("playerMaxAir");
     }
 }
 

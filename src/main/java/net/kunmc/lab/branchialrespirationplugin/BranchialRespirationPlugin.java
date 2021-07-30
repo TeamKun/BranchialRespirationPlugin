@@ -2,6 +2,7 @@ package net.kunmc.lab.branchialrespirationplugin;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.configuration.file.FileConfiguration;
 
 import net.kunmc.lab.branchialrespirationplugin.command.CommandHandler;
 import net.kunmc.lab.branchialrespirationplugin.command.ConfigManager;
@@ -9,8 +10,6 @@ import net.kunmc.lab.branchialrespirationplugin.command.ConfigManager;
 public class BranchialRespirationPlugin extends JavaPlugin
 {
     private static BranchialRespirationPlugin INSTANCE;
-    private PlayerManager obj_PlayerManager;
-    private AirManager obj_AirManager;
 
     public static BranchialRespirationPlugin getInstance() 
     {
@@ -21,10 +20,15 @@ public class BranchialRespirationPlugin extends JavaPlugin
     public void onEnable() 
     {
         INSTANCE = this;
-        this.obj_PlayerManager = new PlayerManager(this);
-        this.obj_AirManager = new AirManager();
 
-        CommandHandler commandHandler = new CommandHandler(this.obj_AirManager);
+        saveDefaultConfig();
+        FileConfiguration config = getConfig();
+
+        ConfigManager obj_ConfigManager = new ConfigManager(config);
+        PlayerManager obj_PlayerManager = new PlayerManager(this);
+        AirManager obj_AirManager = new AirManager();
+
+        CommandHandler commandHandler = new CommandHandler(obj_AirManager, obj_ConfigManager);
         getServer().getPluginCommand("erakokyu").setExecutor(commandHandler);
         getServer().getPluginCommand("erakokyu").setTabCompleter(commandHandler);
 
