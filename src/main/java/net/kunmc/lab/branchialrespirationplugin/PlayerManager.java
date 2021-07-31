@@ -10,16 +10,18 @@ import org.bukkit.entity.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.UUID;
+import java.util.HashSet;
+import java.util.Set;
 
 public class PlayerManager implements Listener 
 {
     private static PlayerManager INSTANCE;
-    ArrayList<UUID> player_lists;
+    Set<UUID> player_lists;
 
     public PlayerManager(Plugin plugin)
     {
         INSTANCE = this;
-        this.player_lists = new ArrayList<>();
+        this.player_lists = new HashSet<UUID>();
         
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
         addPlayer();
@@ -38,7 +40,7 @@ public class PlayerManager implements Listener
         this.player_lists.add(pl_uuid);
     }
 
-    public ArrayList<UUID> getPlayerList()
+    public Set<UUID> getPlayerList()
     {
         return this.player_lists;
     }

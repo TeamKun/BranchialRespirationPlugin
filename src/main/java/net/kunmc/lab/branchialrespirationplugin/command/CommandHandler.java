@@ -20,7 +20,7 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
     private ConfigManager obj_ConfigManager;
     private boolean enable_flg = false;
 
-    private final double MIN_TICK_DAMAGE = 1.0;
+    private final double MIN_TICK_DAMAGE = 0.0;
     private final double MAX_TICK_DAMAGE = 20.0;
     private final int MIN_TICK_DEC_AIR = 5;
     private final int MAX_TICK_DEC_AIR = 10;
@@ -57,8 +57,16 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
             }
             else if(args[0].equals("set"))
             {
-                setParameter(sender, args[1], args[2]);
-                result = true;
+                if(args.length == 3)
+                {
+                    setParameter(sender, args[1], args[2]);
+                    result = true;
+                }
+                else
+                {
+                    sender.sendMessage("引数が不足しています");
+                    sender.sendMessage("[erakokyu help] でコマンドを確認してください");
+                }
             }
             else if(args[0].equals("info"))
             {

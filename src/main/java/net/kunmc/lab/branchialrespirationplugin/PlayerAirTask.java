@@ -10,8 +10,8 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 
-import java.util.ArrayList;
 import java.util.UUID;
+import java.util.Set;
 
 public class PlayerAirTask extends BukkitRunnable
 {
@@ -35,7 +35,7 @@ public class PlayerAirTask extends BukkitRunnable
     public void run() 
     {
         // ログイン中のプレイヤーリスト取得
-        ArrayList<UUID> uuid_list = this.obj_PlayerManager.getPlayerList();
+        Set<UUID> uuid_list = this.obj_PlayerManager.getPlayerList();
 
         for(UUID uuid : uuid_list)
         {
