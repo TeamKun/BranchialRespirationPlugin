@@ -21,8 +21,8 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
     private boolean enable_flg = false;
 
     private final double MIN_TICK_DAMAGE = 1.0;
-    private final double MAX_TICK_DAMAGE = 10.0;
-    private final int MIN_TICK_DEC_AIR = 3;
+    private final double MAX_TICK_DAMAGE = 20.0;
+    private final int MIN_TICK_DEC_AIR = 5;
     private final int MAX_TICK_DEC_AIR = 10;
     private final int MIN_TICK_ADD_AIR = 2;
     private final int MAX_TICK_ADD_AIR = 10;
@@ -100,19 +100,19 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
             case 3:
                 if(args[1].equals("damage"))
                 {
-                    return Stream.of(MIN_TICK_DAMAGE + " ~ " + MAX_TICK_DAMAGE + " の間で指定してください")
+                    return Stream.of(MIN_TICK_DAMAGE + "~" + MAX_TICK_DAMAGE + " の間で指定してください")
                             .filter(e -> e.startsWith(args[2]))
                             .collect(Collectors.toList());
                 }
                 else if(args[1].equals("decair"))
                 {
-                    return Stream.of(MIN_TICK_DEC_AIR + " ~ " + MAX_TICK_DEC_AIR + " の間で指定してください")
+                    return Stream.of(MIN_TICK_DEC_AIR + "~" + MAX_TICK_DEC_AIR + " の間で指定してください")
                             .filter(e -> e.startsWith(args[2]))
                             .collect(Collectors.toList());
                 }
                 else if(args[1].equals("addair"))
                 {
-                    return Stream.of(MIN_TICK_ADD_AIR + " ~ " + MAX_TICK_ADD_AIR + " の間で指定してください")
+                    return Stream.of(MIN_TICK_ADD_AIR + "~" + MAX_TICK_ADD_AIR + " の間で指定してください")
                             .filter(e -> e.startsWith(args[2]))
                             .collect(Collectors.toList());
                 }
@@ -159,9 +159,10 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
         {
             try {
                 double num = Double.parseDouble(par);
-                if(num >= MIN_TICK_DAMAGE || num <= MAX_TICK_DAMAGE)
+                if(num >= MIN_TICK_DAMAGE && num <= MAX_TICK_DAMAGE)
                 {
                     this.obj_ConfigManager.setDamage(num);
+                    sender.sendMessage("1Tickあたりのダメージ量 " + num + " で設定しました");
                 }
                 else
                 {
@@ -175,9 +176,10 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
         {
             try {
                 int num = Integer.parseInt(par);
-                if(num >= MIN_TICK_DEC_AIR || num <= MAX_TICK_DEC_AIR)
+                if(num >= MIN_TICK_DEC_AIR && num <= MAX_TICK_DEC_AIR)
                 {
                     this.obj_ConfigManager.setDecAir(num);
+                    sender.sendMessage("1Tickあたりの酸素減少量 " + num + " で設定しました");
                 }
                 else
                 {
@@ -191,9 +193,10 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
         {
             try {
                 int num = Integer.parseInt(par);
-                if(num >= MIN_TICK_ADD_AIR || num <= MAX_TICK_ADD_AIR)
+                if(num >= MIN_TICK_ADD_AIR && num <= MAX_TICK_ADD_AIR)
                 {
                     this.obj_ConfigManager.setAddAir(num);
+                    sender.sendMessage("1Tickあたりの酸素増加量 " + num + " で設定しました");
                 }
                 else
                 {

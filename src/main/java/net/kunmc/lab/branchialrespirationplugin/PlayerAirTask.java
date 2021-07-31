@@ -18,15 +18,17 @@ public class PlayerAirTask extends BukkitRunnable
     private PlayerManager obj_PlayerManager;
     private ConfigManager obj_ConfigManager;
 
-    private final int PLAYER_MAX_AIR = 300;
-    private final double ADD_TICK_DAMAGE = 1.0;
-    private final int DEC_TICK_AIR = 6;
-    private final int ADD_TICK_AIR = 2;
+    private int playerMaxAir;
+    private double addTickDamage;
+    private int decTickAir;
+    private int addTickAir;
 
     public PlayerAirTask(PlayerManager obj_PlayerManager, ConfigManager obj_ConfigManager)
     {
         this.obj_PlayerManager = obj_PlayerManager;
         this.obj_ConfigManager = obj_ConfigManager;
+
+        getParameter();
     }
     
     @Override
@@ -48,32 +50,29 @@ public class PlayerAirTask extends BukkitRunnable
     // プレイヤーの酸素残量管理
     private void PlayerAirManager(Player player)
     {
+        getParameter();
+        
         boolean check = checkHeadInWater(player);
         int now_air = player.getRemainingAir();
-        // BranchialRespirationPlugin.getInstance().getLogger().info("タスク　　　  = " + String.valueOf(now_air));
 
         // プレイヤーの頭の位置が水中か判定
         if(check == false)
         {
             // プレイヤーの頭が水中にない場合
-            int dec_air = (now_air - this.DEC_TICK_AIR) > 0 ? this.DEC_TICK_AIR : now_air;
+            int dec_air = (now_air - this.decTickAir) > 0 ? this.decTickAir : now_air;
             player.setRemainingAir(now_air - dec_air);
 
             if((now_air - dec_air) <= 0)
             {
                 //プレイヤーの酸素値が0の場合ダメージを与える 
-                player.damage(this.ADD_TICK_DAMAGE);
+                player.damage(this.addTickDamage);
             }
-
-            // BranchialRespirationPlugin.getInstance().getLogger().info("地上 設定酸素 = " + String.valueOf(player.getRemainingAir()));
         }
         else
         {
             // プレイヤーの頭が水中にある場合
-            int dec_air = (this.PLAYER_MAX_AIR - now_air) > this.ADD_TICK_AIR ? this.ADD_TICK_AIR : (this.PLAYER_MAX_AIR - now_air);
+            int dec_air = (this.playerMaxAir - now_air) > this.addTickAir ? this.addTickAir : (this.playerMaxAir - now_air);
             player.setRemainingAir(now_air + dec_air);
-
-            // BranchialRespirationPlugin.getInstance().getLogger().info("水中 設定酸素 = " + String.valueOf(player.getRemainingAir()));
         }
     }
 
@@ -98,5 +97,14 @@ public class PlayerAirTask extends BukkitRunnable
         }
 
         return result;
+    }
+
+    // パラメータをコンフィグから取得して更新
+    private void getParameter()
+    {
+        this.addTickDamage = this.obj_ConfigManager.getDamage();
+        this.decTickAir = this.obj_ConfigManager.getDecAir();
+        this.addTickAir = this.obj_ConfigManager.getAddAir();
+        this.playerMaxAir = obj_ConfigManager.getMaxAir();
     }
 }

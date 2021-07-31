@@ -1,4 +1,4 @@
-addTickDamage: 1.0
+addTickDamage: 2.0
 decTickAir: 6
-addTickAir: 2
+addTickAir: 3
 playerMaxAir: 300
