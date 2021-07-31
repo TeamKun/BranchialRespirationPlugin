@@ -223,9 +223,9 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
         // コマンドのへプルを表示
         sender.sendMessage("erakokyu on [プラグインを有効化]");
         sender.sendMessage("erakokyu off [プラグインを無効化]");
-        sender.sendMessage("erakokyu set damage (" + MIN_TICK_DAMAGE + " ~ " + MAX_TICK_DAMAGE + ") [酸素がなくなったときに受ける、1tick当たりのダメージ量]");
-        sender.sendMessage("erakokyu set decair (" + MIN_TICK_DEC_AIR + " ~ " + MAX_TICK_DEC_AIR + ") [プレイヤーが地上にいるときの、酸素の減少量]");
-        sender.sendMessage("erakokyu set addair (" + MIN_TICK_ADD_AIR + " ~ " + MAX_TICK_ADD_AIR + ") [プレイヤーが水中にいるときの、酸素の増加量]");
+        sender.sendMessage("erakokyu set damage (" + MIN_TICK_DAMAGE + " ~ " + MAX_TICK_DAMAGE + ") [酸素がなくなったときに受ける、1Tickあたりのダメージ量を設定する]");
+        sender.sendMessage("erakokyu set decair (" + MIN_TICK_DEC_AIR + " ~ " + MAX_TICK_DEC_AIR + ") [プレイヤーが地上にいるときの、1Tickあたりの酸素の減少量を設定する]");
+        sender.sendMessage("erakokyu set addair (" + MIN_TICK_ADD_AIR + " ~ " + MAX_TICK_ADD_AIR + ") [プレイヤーが水中にいるときの、1Tickあたりの酸素の増加量を設定する]");
         sender.sendMessage("erakokyu info [現在の設定パラメータを確認]");
     }
 }
